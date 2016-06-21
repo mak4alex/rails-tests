@@ -2,6 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Task do
   let(:task) { Task.new }
+
+  it_should_behave_like 'sizeable'
+
   it 'can distinguish a completed task' do
     expect(task).not_to be_complete
     task.mark_completed
