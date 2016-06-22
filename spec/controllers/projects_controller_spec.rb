@@ -2,6 +2,14 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
+  describe 'GET index' do
+    it 'is a successful request with no filters' do
+      get :index
+      expect(response).to have_http_status(:success)
+      expect(response).to render_template(:index)
+    end
+  end
+
   describe 'POST create' do
     it 'creates a project' do
       post :create, project: { name: 'Runway', tasks: 'Start something:2' }

@@ -37,6 +37,7 @@ group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails'
+  gem 'mocha', require: false
 end
 
 group :development do
@@ -49,5 +50,6 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'minitest-rails-capybara'
 end
 

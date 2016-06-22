@@ -15,10 +15,10 @@ FactoryGirl.define do
     end
 
     trait :later do
-      due_date { 1,month.from_now }
+      due_date { 1.month.from_now }
     end
 
-    facroty :trivial, traits: [:small, :later]
+    factory :trivial, traits: [:small, :later]
     
     factory :panic, traits: [:large, :soon]
   end
