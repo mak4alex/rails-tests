@@ -1,0 +1,8 @@
+chapter:
+  title: Write a chapter
+  project: book
+
+<% 10.times do |i| %>
+task_<%= i %>:
+  name: "Task <%= i %>"
+<% end %>
