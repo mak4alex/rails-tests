@@ -43,9 +43,9 @@ RSpec.describe ProjectsController, type: :controller do
 
   describe 'PUT/PATCH update' do
     it 'fails update gracefully' do
-      sample = Proejct.create!(name: 'Test Project')
-      expect(sample).to recieve(:update_attributes).and_return(false)
-      allow(Project).to recieve(:find).and_return(sample)
+      sample = Project.create!(name: 'Test Project')
+      expect(sample).to receive(:update_attributes).and_return(false)
+      allow(Project).to receive(:find).and_return(sample)
       patch :update, id: sample.id, project: { name: 'Fred' }
       expect(response).to render_template(:edit)
     end

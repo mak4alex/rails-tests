@@ -6,7 +6,7 @@ RSpec.describe 'projects/index' do
     name: 'On Schedule', tasks: [completed_task]) }
   let(:incomplete_task) { Task.create!(size: 1) }
   let(:behind_schedule) { Project.create!(due_date: 1.day.from_now,
-    name 'Behind Schedule', tasks: [incomplete_task]) }
+    name: 'Behind Schedule', tasks: [incomplete_task]) }
 
   it 'renders the index page with correct dom element' do
     @projects = [on_schedule, behind_schedule]

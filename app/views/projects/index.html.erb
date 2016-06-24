@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <%= @project.each do |project| %>
+    <%= @projects.each do |project| %>
       <tr class="project-row" id="<%= dom_id(project)%>">
         <td class="name"><%= name_with_status(project) %></td>
         <td class="total-size"><%= project.total_size %></td>

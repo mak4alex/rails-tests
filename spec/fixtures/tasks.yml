@@ -1,8 +1,15 @@
-chapter:
-  title: Write a chapter
-  project: book
+one:
+  id: 1
+  project: bluebook
+  title: Hunt the aliens
+  size: 1
+  completed_at:
+  project_order: 1
 
-<% 10.times do |i| %>
-task_<%= i %>:
-  name: "Task <%= i %>"
-<% end %>
+two:
+  id: 2
+  project: bluebook
+  title: Write a book
+  size: 1
+  completed_at:
+  project_order: 2

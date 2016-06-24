@@ -70,15 +70,23 @@ RSpec.describe Project do
 
   end
 
-  it 'uses factory girl slug block' do
-    project = create(:project, name: 'Book To Write')
-    expect(project.slug).to eq('book_to_write')
-  end
-
   it 'stubs an object' do
     project = Project.new(name: 'Project Greenlight')
     allow(project).to receive(:name).and_return("Fred")
     expect(project.name).to eq('Fred')
+  end
+
+  describe 'tasks order' do
+    let(:project) { project = Project.create(name: 'Project') }
+
+    it 'gives me the order of the first task in am empty project' do
+      expect(project.next_task_order).to eq(1)
+    end
+
+    it 'gives me the order of the next task in a project' do
+      project.tasks.create(project_order: 3)
+      expect(project.next_task_order).to eq(4)
+    end
   end
 
 end
