@@ -1,8 +1,28 @@
 require 'rails_helper'
 
 RSpec.describe TasksController, type: :controller do
+  let(:user) { User.create!(email: 'rspec@example.com', password: 'password')}
+  
   before(:example) do
+    sign_in(user)
     ActionMailer::Base.deliveries.clear
+  end
+
+  describe 'POST create' do
+    fixtures :all
+    let(:project) { Project.create!(name: 'Project Runway') }
+
+    it 'allows a user to create a task for project they belong to' do
+      user.projects << project
+      user.save!
+      post :create, task: { project_id: project.id, title: 'just do it', size: '1' } 
+      expect(project.reload.tasks.first.title).to eq('just do it')
+    end 
+
+    it 'does not allow a user to create a task for project without access' do
+      post :create, task: { project_id: project.id, title: 'just do it', size: '1' }
+      expect(project.reload.tasks.size).to eq(0)
+    end
   end
 
   describe 'PATCH update' do

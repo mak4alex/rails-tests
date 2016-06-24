@@ -56,3 +56,4 @@ group :test do
   gem 'minitest-rails-capybara'
 end
 
+gem 'devise'

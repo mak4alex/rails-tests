@@ -1,6 +1,6 @@
 Given(/^a project$/) do
   @project = Project.create(name: 'Bluebook')
-  @peoject.tasks.create(title: 'Hunt the Aiens', size: 1, project_order: 1)
+  @project.tasks.create(title: 'Hunt the Aiens', size: 1, project_order: 1)
   @project.tasks.create(title: 'Write a book', size: 1, project_order: 2)
 end
 
