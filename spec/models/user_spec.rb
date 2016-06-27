@@ -41,8 +41,8 @@ RSpec.describe User, type: :model do
   
   
   describe 'public roles' do
-    let(:user) { User.new }
-    let(:project) { Project.new }
+    let(:user) { create :user }
+    let(:project) { create :project }
 
     it 'allows an admin to view a project' do
       user.admin = true
@@ -51,7 +51,8 @@ RSpec.describe User, type: :model do
 
     it 'allows a public project to be seen anyone' do
       project.public = true
-      expect(user.can_view?(proejct)).to be_truthy
+      project.save
+      expect(user.can_view?(project)).to be_truthy
     end
 
   end
@@ -85,6 +86,19 @@ RSpec.describe User, type: :model do
       user.projects << project_1
       project_1.update_attributes(public: true)
       expect(user.visible_projects).to eq([project_1])
+    end
+  end
+
+  describe 'avatar' do
+    let(:user) { User.new(email: 'test@example.com') }
+    let(:fake_adapter) { instance_double(AvatarAdapter) }
+
+    it 'can get a twitter avatar URL' do
+      allow(fake_adapter).to receive(:image_url).and_return('fake_url')
+      allow(AvatarAdapter).to receive(:new).with(user).and_return(fake_adapter)
+      user.avatar_url
+      expect(fake_adapter).to have_received(:image_url)
+      expect(AvatarAdapter).to have_received(:new)      
     end
   end
 

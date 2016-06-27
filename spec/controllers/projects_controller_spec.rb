@@ -3,35 +3,45 @@ require 'rails_helper'
 RSpec.describe ProjectsController, type: :controller do
 
   describe 'GET index' do
-    it 'dispays all projects correctly' do
-      user = User.new
+    it 'displays all projects correctly' do
+      user = create(:user)
+      sign_in user 
       project = Project.new(:name => 'Project Greenlight')
-      controller.expects(:current_user).returns(user)
-      user.expects(:visible_projects).returns([project])
-      get :index
-      expect(assigns[:projects].map(&:__getobj__)).to eq([project])
+      controller.stub(:current_user).and_return(user)
+      user.stub(:visible_projects).and_return([project])
+      get :index      
       expect(response).to have_http_status(:success)
       expect(response).to render_template(:index)
+      expect(assigns[:projects].map(&:__getobj__)).to eq([project])
     end
   end
 
   describe 'GET show' do
     let(:project) { Project.create(name: 'Project Runway') }
+    before(:each) do
+      user = create(:user)
+      sign_in user
+    end
 
     it 'allows a user who is part of the project to see the project' do
-      controller.current_user.stubs(can_view?: true)
+      controller.current_user.stub(can_view?: true)
       get :show, id: project.id
       expect(response).to render_template(:show)
     end
 
     it 'does not allow a user who is not part of the project to see the project' do
-      controller.current_user.stubs(can_view?: false)
+      controller.current_user.stub(can_view?: false)
       get :show, id: project.id
       expect(response).to redirect_to(new_user_session_path)
     end
   end
 
   describe 'POST create' do
+    before(:each) do
+      @user = create(:user)
+      sign_in @user
+    end
+
     it 'creates a project' do
       post :create, project: { name: 'Runway', tasks: 'Start something:2' }
       expect(response).to redirect_to(projects_path)
@@ -41,7 +51,7 @@ RSpec.describe ProjectsController, type: :controller do
     it 'creates a project (mock version)' do
       fake_action = instance_double(CreatesProject, create: true)
       expect(CreatesProject).to receive(:new)
-        .with(name: 'Runway', task_string: 'start something:2', users: [user])
+        .with(name: 'Runway', task_string: 'start something:2', users: [@user])
         .and_return(fake_action)
       post :create, project: { name: 'Runway', tasks: 'start something:2' }
       expect(response).to redirect_to(projects_path)
@@ -63,6 +73,11 @@ RSpec.describe ProjectsController, type: :controller do
   end
 
   describe 'PUT/PATCH update' do
+    before(:each) do
+      user = create(:user)
+      sign_in user
+    end
+
     it 'fails update gracefully' do
       sample = Project.create!(name: 'Test Project')
       expect(sample).to receive(:update_attributes).and_return(false)

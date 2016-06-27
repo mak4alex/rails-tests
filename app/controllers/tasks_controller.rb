@@ -23,8 +23,8 @@ class TasksController < ApplicationController
     completed = params[:task].delete(:completed)
     params[:task][:completed_at] = Time.current if completed
     if @task.update_attributes(task_params)
-      TaskMailer.task_completed_email(@task).deliver if completed
-      redirect_to @task, notice: 'Project was successgully updated.'
+      TaskMailer.task_completed_email(@task).deliver_now if completed
+      redirect_to @task, notice: 'Project was successfully updated.'
     else
       render :edit
     end

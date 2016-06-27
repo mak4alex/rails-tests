@@ -54,6 +54,9 @@ end
 group :test do
   gem 'capybara'
   gem 'minitest-rails-capybara'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 gem 'devise'
+gem 'twitter'

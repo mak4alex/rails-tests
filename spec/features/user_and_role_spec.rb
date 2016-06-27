@@ -25,11 +25,11 @@ describe 'with users and roles' do
   describe 'roles' do
     let(:project) { Project.create(name: 'Project Gutenberg') }
 
-    it 'allows a user who is part of a project to see tha project' do
+    it 'allows a user who is part of a project to see the project' do
       project.roles.create(user: user)
       log_in_as(user)
-      visit(project_path(project))
-      expect(current_path).to eq(project_path(project))
+      visit(projects_path(project))
+      expect(current_path).to eq(projects_path(project))
     end
 
     it 'does now allow a user who is not part of a project to see that project' do
@@ -39,9 +39,9 @@ describe 'with users and roles' do
     end
 
     it 'allows users to only see projects they are a part of on the index page' do
-      my_project = Project.create!(name: 'My Project')
-      my_project.roles.create(user: user)
-      not_my_project = Project.create!(name: 'Not My Project')
+      my_project = create :project
+      my_project.roles.create!(user: user)
+      not_my_project = create :project 
       log_in_as(user)
       visit projects_path
       expect(page).to have_selector("#project_#{my_project.id}")

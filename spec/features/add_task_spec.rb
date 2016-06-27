@@ -9,6 +9,7 @@ describe 'adding a new task' do
   end
 
   it 'can add and reorder a task' do
+    projects(:bluebook).roles.create(user: users(:user))
     visit project_path(projects(:bluebook))
     fill_in 'Task', with: 'Find UFOs'
     select '2', from: 'Size'

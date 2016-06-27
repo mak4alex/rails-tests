@@ -28,6 +28,17 @@ require 'cucumber/rails'
 #
 ActionController::Base.allow_rescue = false
 
+VCR.configure do |config|
+  config.cassettle_library_dir = 'spec/cassettes'
+  config.hook_intro :webmock
+  config.configure_rspec_metadata!
+end
+
+VCR.cucumber_tags do |t|
+  t.tag '@vcr', use_scenario_name: true
+  t.tags '@twitter', '@facebook'  
+end
+
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
 begin
