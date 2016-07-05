@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class ProjectsControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
   test 'the project method creates a project' do
+    sign_in users(:bob)
     post :create, project: { name: 'Runway', tasks: 'Start something:2' }
     assert_redirected_to projects_path
     assert_equal 'Runway', assigns[:action].project.name
@@ -14,13 +17,14 @@ class ProjectsControllerTest < ActionController::TestCase
     behind_schedule = Project.create!(due_date: 1.day.from_now,
       name: 'Behind Schedule',
       tasks: [Task.create!(size: 1)])
+    sign_in users(:bob)
     get :index
     assert_select("#project_#{on_schedule.id} .on_schedule")
     assert_select("#project_#{behind_schedule.id} .behind_schedule")
   end
 
   test 'routing' do
-    assert_routing '/projects', controller: 'projects', action: 'index'
+    assert_routing '/', controller: 'projects', action: 'index'
     assert_routing({ path: '/projects', method: 'post' }, controller: 'projects', action: 'create')
     assert_routing '/projects/new', controller: 'projects', action: 'new'
     assert_routing '/projects/1', controller: 'projects', action: 'show', id: '1'

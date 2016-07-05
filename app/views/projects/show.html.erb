@@ -9,7 +9,7 @@
   </thead>
   <tbody>
     <% @project.tasks.each do |task| %>
-      <tr id="task_<%= task.project_order %>">
+      <tr id="<%= dom_id(task) %>" class="task">
         <td class="name"><%= task.title %></td>
         <td class="size"><%= task.size %></td>
         <td class="completed">
@@ -21,10 +21,10 @@
         </td>
         <td>
           <% unless task.first_in_project? %>
-            <%= link_to 'Up', up_task_path(task.id), method: :patch %>
+            <%= link_to 'Up', '#', class: 'up' %>
           <% end %>
           <% unless task.last_in_project? %>
-            <%= link_to 'Down', down_task_path(task.id), method: :patch %>
+            <%= link_to 'Down', '#', class: 'down' %>
           <% end %>
         </td>
       </tr>

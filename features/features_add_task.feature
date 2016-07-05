@@ -3,6 +3,7 @@ Feature: Adding a task
   Background:
     Given a project
 
+  @javascript
   Scenario: I can add and change priority of new task
     When I visit the page
     And I complete the new task form

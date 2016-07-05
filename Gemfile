@@ -41,6 +41,8 @@ group :development, :test do
   gem 'launchy'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
+  gem 'jasmine-rails'
+  gem 'poltergeist'
 end
 
 group :development do

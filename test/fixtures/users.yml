@@ -1,0 +1,4 @@
+bob:
+  email: bob@mail.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  admin: true
