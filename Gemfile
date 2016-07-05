@@ -43,6 +43,11 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'jasmine-rails'
   gem 'poltergeist'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'pry-stack_explorer'
+  gem 'pry-rescue'
+  gem 'better_errors'
 end
 
 group :development do
@@ -51,6 +56,14 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  gem 'spring-commands-rspec'
+
+  gem "awesome_print", require: "ap"
+
+  gem 'guard'
+  gem 'guard-minitest'
+  gem 'guard-rspec'
+  gem 'guard-cucumber'
 end
 
 group :test do
